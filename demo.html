@@ -37,15 +37,23 @@
 
 <h1>Demo trace — multi-turn simulation with mediation</h1>
 <p class="muted">
-  Real GPT-5 + GPT-5-mini calls. Two LLM-driven personas (Carolina, advogada; José, engenheiro)
-  each chat with their assigned chief-of-staff (Marina, Tiago) over 5 service-mode ticks.
-  Pivot then detects asymmetry in cognitive load and runs a 4-round mediation that ends in a
-  formal agreement. State persists in a real SQLite DB so the assistants have memory across turns.
+  This page shows what one full session looks like. Two LLM-driven personas (Carolina,
+  advogada; José, engenheiro) play the role of a real Niterói couple. Each chats privately
+  with their own assigned assistant. After enough state accrues, the genderless mediator
+  (Pivô) computes the asymmetry in cognitive load, drafts a swap proposal, and ferries it
+  between the two threads — incorporating each side's edits — until both partners accept.
+  All four agents are real GPT-5 / GPT-5-mini calls; the personas are not scripted.
 </p>
-<p class="muted">
-  Cost of this run: <strong>$0.17</strong>. Debug lines (classifier output, redraft trace) removed
-  for readability. Setting: middle-class Niterói; both partners working ≥40h/wk, 2 children.
-</p>
+
+<div style="background:#fef3c7; border-left: 3px solid #d97706; padding: 0.8rem 1rem; border-radius: 4px; margin: 1.2rem 0; font-size: 0.92rem;">
+  <strong>What to watch for as you scroll:</strong>
+  <ul style="margin: 0.4rem 0 0 1rem; padding: 0;">
+    <li>Phase 1 — service mode (5 ticks). Routine task capture. Notice how Marina at <code>t02</code> references the reminder she set at <code>t00</code> ("já deixei seu lembrete das 16h30") — real memory across turns.</li>
+    <li>Phase 2 — Pivot evaluation. After enough state, an obvious asymmetry surfaces: Carolina is doing all the childcare-related work; José is doing maintenance. The bot detects this from logged data alone, no survey.</li>
+    <li>Phase 3 — multi-round mediation. Carolina makes substantive edits to the draft proposal (adds scope detail, start date). Pivô redrafts each time. José ultimately accepts with an operational ask.</li>
+    <li>Phase 4 — joint notarization. Pivô speaks identical formal text in both threads to formalize the agreement.</li>
+  </ul>
+</div>
 
 <hr>
 
