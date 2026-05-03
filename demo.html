@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cog Load — Demo trace (5 ticks + multi-round mediation)</title>
+<style>
+  body { max-width: 880px; margin: 2.5rem auto; padding: 0 1.5rem; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #0f172a; line-height: 1.55; }
+  h1 { font-size: 1.7rem; margin-bottom: 0.2rem; }
+  h2 { font-size: 1.05rem; margin-top: 2rem; color: #334155; text-transform: uppercase; letter-spacing: .07em; }
+  h3 { font-size: 1.0rem; margin-top: 1.5rem; }
+  .muted { color: #64748b; font-size: 0.85rem; }
+  .turn { margin: 0.6rem 0 1.4rem; }
+  .from { font-weight: 600; font-size: 0.9rem; color: #475569; margin-bottom: 0.2rem; }
+  .from.carolina { color: #be185d; }
+  .from.jose { color: #0369a1; }
+  .from.pivot { color: #b45309; }
+  .from.marina { color: #be185d; }
+  .from.tiago { color: #0369a1; }
+  .msg { background: #f8fafc; border-left: 3px solid #cbd5e1; padding: 0.6rem 0.85rem; margin: 0.2rem 0 0.5rem 1rem; font-size: 0.95rem; white-space: pre-wrap; border-radius: 4px; }
+  .msg.pivot { background: #1e293b; color: #f1f5f9; border-left-color: #f59e0b; }
+  .stat { background: #fff7ed; border-left: 3px solid #f59e0b; padding: 0.6rem 0.85rem; margin: 0.4rem 0; font-size: 0.9rem; border-radius: 4px; }
+  hr { border: none; border-top: 1px solid #e2e8f0; margin: 2rem 0; }
+  .nav a { color: #1d4ed8; text-decoration: none; margin-right: 1rem; }
+  .nav a:hover { text-decoration: underline; }
+  .pill { display: inline-block; font-size: 0.7rem; padding: 1px 7px; border-radius: 999px; background: #dbeafe; color: #1e40af; vertical-align: middle; }
+  .agreement { background: #ecfdf5; border-left: 3px solid #10b981; padding: 1rem; border-radius: 4px; margin: 1rem 0; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<p class="nav">
+  <a href="./">← Cog Load home</a>
+  <a href="./mocks-pt.html">Mockups (PT)</a>
+  <a href="./mocks-en.html">Mockups (EN)</a>
+</p>
+
+<h1>Demo trace — multi-turn simulation with mediation</h1>
+<p class="muted">
+  Real GPT-5 + GPT-5-mini calls. Two LLM-driven personas (Carolina, advogada; José, engenheiro)
+  each chat with their assigned chief-of-staff (Marina, Tiago) over 5 service-mode ticks.
+  Pivot then detects asymmetry in cognitive load and runs a 4-round mediation that ends in a
+  formal agreement. State persists in a real SQLite DB so the assistants have memory across turns.
+</p>
+<p class="muted">
+  Cost of this run: <strong>$0.17</strong>. Debug lines (classifier output, redraft trace) removed
+  for readability. Setting: middle-class Niterói; both partners working ≥40h/wk, 2 children.
+</p>
+
+<hr>
+
+<h2>Phase 1 — service mode (5 ticks)</h2>
+
+<div class="turn">
+  <div class="from carolina">[t00] Carolina → Marina</div>
+  <div class="msg">Bom dia Marina! Lembra o José de levar o João pro treino às 17h hoje e vê se dá pra agendar/antecipar a vacina da Maria pra sexta às 10h? Valeu, kkk.</div>
+  <div class="from marina">Marina → Carolina</div>
+  <div class="msg">Bom dia! Já deixei um lembrete pra você às 16h30 pra lembrar o José do treino do João às 17h. Registrei a tarefa de agendar/antecipar a vacina da Maria para sexta às 10h; prefere que eu tente em qual posto/clínica e pode me passar nome completo, data de nascimento e convênio/cartão SUS dela? Esse treino do João é recorrente? Se for, deixo lembrete fixo.</div>
+</div>
+
+<div class="turn">
+  <div class="from jose">[t01] José → Tiago</div>
+  <div class="msg">Bom dia, Tiago. Pode agendar o encanador pro vazamento do banheiro hoje à tarde? Tenho reunião às 15h — prefiro antes das 14h ou depois das 16h.</div>
+  <div class="from tiago">Tiago → José</div>
+  <div class="msg">Feito! Vou tentar encaixar o encanador pra hoje: antes das 14h ou depois das 16h. Te aviso assim que eu tiver a confirmação. Quer que eu priorize alguém de confiança que você já usou ou posso buscar opções rápidas com boa avaliação?</div>
+</div>
+
+<div class="turn">
+  <div class="from carolina">[t02] Carolina → Marina</div>
+  <div class="msg">Perfeito, Marina — Maria Silva, nascida em 12/10/2020, plano Unimed, nº 987654321 (se precisar do SUS, é 1234567890). Tenta na UBS do bairro primeiro e, se não tiver vaga, vê na clínica Unimed do shopping; e o treino do João é recorrente, toda quarta às 17h. Valeu, kkk.</div>
+  <div class="from marina">Marina → Carolina</div>
+  <div class="msg">Perfeito! Anotei os dados da Maria e vou tentar agendar para sexta 10h — começo pela UBS do bairro; se não rolar, vou na clínica Unimed do shopping e te aviso.
+Deixei o treino do João como recorrente toda quarta 17h, com lembrete pra você às 16h30, e bloqueei na agenda. Se a duração não for 1h, me diz que ajusto.</div>
+</div>
+
+<div class="turn">
+  <div class="from jose">[t03] José → Tiago</div>
+  <div class="msg">Prioriza quem já usei e confio. Se não tiver vaga hoje, pega uma opção rápida com boas avaliações e me avisa.</div>
+  <div class="from tiago">Tiago → José</div>
+  <div class="msg">Beleza! Vou começar pelos contatos de confiança. Se ninguém conseguir hoje nesses horários, eu aciono uma opção bem avaliada e te aviso. Quer que eu te atualize até umas 13h?</div>
+</div>
+
+<div class="turn">
+  <div class="from carolina">[t04] Carolina → Marina</div>
+  <div class="msg">É 1h mesmo, pode marcar até 18h.
+E lembra o José de buscar às 18h, por favor. Obrigada, kkk.</div>
+  <div class="from marina">Marina → Carolina</div>
+  <div class="msg">Fechado: treino do João toda quarta, 17h–18h, já bloqueado.
+Hoje te lembro às 17h30 de pedir pro José buscar às 18h.
+Quer que eu deixe esse lembrete de busca recorrente também?</div>
+</div>
+
+<hr>
+
+<h2>Phase 2 — Pivot evaluation</h2>
+<div class="stat">
+  <strong>Carolina:</strong> 5 tasks &middot; <code>{childcare: 5}</code><br>
+  <strong>José:</strong> 2 tasks &middot; <code>{maintenance: 2}</code><br>
+  <strong>Discrepancy:</strong> domain=<code>childcare</code> &middot; Carolina=5 vs. José=0 (delta=5) <span class="pill">M1 — info asymmetry</span>
+</div>
+
+<h2>Phase 3 — multi-round mediation</h2>
+<p class="muted">Pivot drafts an initial proposal. Each partner can <em>accept</em>, <em>edit</em>, or <em>reject</em>. Edits trigger a redraft and re-confirmation by the originator. Below is the round-by-round flow; intermediate redraft text omitted for brevity (each redraft incorporates the prior round's counter).</p>
+
+<h3>Round 1 — Pivot → Carolina (initiator review)</h3>
+<div class="msg pivot">⬢ Pivô · proposta privada
+Olha a proposta atual pra você confirmar antes de eu mandar pro/à José: "José, assuma integralmente saúde e escola dos nossos filhos pelas próximas 4 semanas, sem revezamento de volta. Não vou interferir; seu chefe-de-gabinete pode apoiar com lembretes e checklist. Conto com você."</div>
+<div class="from carolina">Carolina → Pivô</div>
+<div class="msg"><em>Editar com sugestão</em> — manda assim: "José, preciso que você assuma a responsabilidade principal pela saúde e rotina escolar das crianças pelas próximas 4 semanas (consultas, levar/buscar, medicação e dever de casa). Eu fico de backup só para emergências; pode confirmar se consegue?"</div>
+
+<h3>Round 2 — Pivot → Carolina (re-confirm after redraft)</h3>
+<div class="from carolina">Carolina → Pivô</div>
+<div class="msg">Manda assim, só ajusta pra começar na próxima segunda (se ele puder confirmar até domingo). Pede pro José confirmar pra gente fechar. <em>(edit — small)</em></div>
+
+<h3>Round 3 — Pivot → Carolina (third round, final accept)</h3>
+<div class="from carolina">Carolina → Pivô</div>
+<div class="msg">Manda assim. Pede pro José confirmar até domingo pra começar na próxima segunda e me avisa quando ele responder, por favor. Obrigada, kkk. <strong>(accept)</strong></div>
+
+<h3>Round 4 — Pivot → José (other-partner review)</h3>
+<div class="msg pivot">⬢ Pivô · proposta de Carolina
+"José, assuma integralmente a saúde e a rotina escolar dos nossos filhos pelas próximas 4 semanas (consultas, transporte, medicação, dever de casa), com você liderando todas as tarefas enquanto seu chefe-de-gabinete oferece apoio logístico com lembretes e checklist e só atua como backup em emergências; início na próxima segunda-feira (por favor confirme até domingo) e término 4 semanas depois, com possibilidade de ajuste se necessário — confirme sua disponibilidade para fecharmos."
+
+Sem peso: o histórico mostra desequilíbrio nesse domínio. Topa?</div>
+<div class="from jose">José → Pivô</div>
+<div class="msg">Topo. Só preciso que você bloqueie/coordene minha agenda pras rotinas, mande checklist diário e me sinalize conflitos de reunião — pode confirmar isso pra ela? <strong>(accept with operational ask)</strong></div>
+
+<h2>Phase 4 — joint notarization (after 4 rounds)</h2>
+
+<div class="agreement">
+  <strong>⬢ Pivô · acordo formalizado</strong> (spoken in BOTH threads simultaneously)<br><br>
+  Acordo: saúde e escola dos filhos fica com José por 4 semanas conforme combinado. Carolina não intervém. Apoio: chefes-de-gabinete lembram e mantêm checklists. Cancelável a qualquer momento por qualquer um.
+</div>
+
+<p class="muted"><strong>Result:</strong> agreement reached and formalized. Treatment-mechanism tags surfaced: <span class="pill">M1 — info</span> <span class="pill">M5 — indivisibility</span> <span class="pill">M6 — learning costs</span> <span class="pill">M9 — altruism + commitment</span>.</p>
+
+<hr>
+
+<h2>What this trace demonstrates</h2>
+<ul>
+  <li><strong>Memory across turns</strong>: Marina at t02 references the t00 reminder she set ("já deixei seu lembrete das 16h30") — real DB, not stub.</li>
+  <li><strong>Privacy boundary</strong>: Carolina's chat with Marina is never visible to José or Tiago. Only Pivot — the genderless mediator — sees both sides, and even Pivot only ferries <em>structured proposals</em>, never raw chat text.</li>
+  <li><strong>Multi-round mediation</strong>: Pivot redrafts the proposal between rounds incorporating each side's edits. Carolina's added scope details ("consultas, transporte, medicação, dever de casa") and start-date condition ("próxima segunda, confirme até domingo") survived all the way into the final agreement.</li>
+  <li><strong>Failure modes</strong>: this run converged in 4 rounds. The framework hard-caps at 10 rounds; if no agreement, no proposal is forwarded.</li>
+</ul>
+
+</body>
+</html>

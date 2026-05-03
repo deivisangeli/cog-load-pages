@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cog Load — research project landing</title>
+<style>
+  body { max-width: 760px; margin: 2.5rem auto; padding: 0 1.5rem; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #0f172a; line-height: 1.55; }
+  h1 { font-size: 1.8rem; margin-bottom: 0.2rem; }
+  h2 { font-size: 1.0rem; margin-top: 2rem; color: #334155; text-transform: uppercase; letter-spacing: .07em; }
+  .muted { color: #64748b; font-size: 0.85rem; }
+  .card { display: block; padding: 1rem 1.2rem; margin: 0.75rem 0; border: 1px solid #e2e8f0; border-radius: 8px; text-decoration: none; color: #0f172a; transition: border-color .12s; }
+  .card:hover { border-color: #1d4ed8; }
+  .card .title { font-weight: 600; font-size: 1rem; }
+  .card .desc { font-size: 0.85rem; color: #475569; margin-top: 0.2rem; }
+  .pill { display: inline-block; font-size: 0.7rem; padding: 1px 8px; border-radius: 999px; background: #fde68a; color: #92400e; vertical-align: middle; margin-left: 0.5rem; }
+  hr { border: none; border-top: 1px solid #e2e8f0; margin: 2rem 0; }
+  ul { padding-left: 1.4rem; } li { margin: 0.3rem 0; }
+</style>
+</head>
+<body>
+
+<h1>Cog Load <span class="pill">private dev pilot</span></h1>
+<p class="muted">A WhatsApp-native household chief-of-staff for Brazilian middle-class couples. Multi-author research project; build lead Deivis Angeli.</p>
+
+<h2>What it is, in one paragraph</h2>
+<p>
+  Each couple is assigned three agents: <strong>two private points-of-contact</strong> (one per
+  partner, gender-matched persona) plus a single genderless <strong>chief of staff (Pivô / Pivot)</strong>
+  that mediates. POCs run "service mode" continuously — capturing tasks, holding lists, sending
+  reminders, anticipating handoffs. Pivot stays out of the way until the data shows asymmetry, then
+  invites reflection and (with both sides' approval) drafts and ferries concrete trade proposals
+  between the two threads. POCs are architecturally incapable of reading each other's chats; only
+  Pivot has cross-partner visibility, and only via structured payloads.
+</p>
+
+<h2>Demos</h2>
+
+<a class="card" href="demo.html">
+  <div class="title">Live trace — multi-turn simulation with mediation</div>
+  <div class="desc">Two LLM personas chat with their POCs over 5 ticks; Pivot detects asymmetry, runs a 4-round mediation that incorporates both sides' edits and reaches a formalized agreement. Real GPT-5 + GPT-5-mini, ~$0.17 per run.</div>
+</a>
+
+<a class="card" href="mocks-pt.html">
+  <div class="title">Mockups — Portuguese (PT-BR)</div>
+  <div class="desc">9 mock screens in WhatsApp + web app form, walking through onboarding, service mode, reflection, mediation, dashboard, LGPD console.</div>
+</a>
+
+<a class="card" href="mocks-en.html">
+  <div class="title">Mockups — English</div>
+  <div class="desc">Parallel English-language versions of the mock screens for non-PT readers.</div>
+</a>
+
+<h2>Treatment-mechanism mapping</h2>
+<p class="muted">Each Pivot intervention is tagged with the treatment mechanism(s) it targets, drawn from <code>CogLoad_Treatments.docx</code>:</p>
+<ul>
+  <li><strong>M1 — Information</strong>: side-by-side load summary delivered privately to each partner</li>
+  <li><strong>M2 — Norms</strong>: descriptive-norm correction relative to similar BR households</li>
+  <li><strong>M4 — Standards</strong>: explicit standards-negotiation step before reassignment</li>
+  <li><strong>M5 — Indivisibility</strong>: the agent <em>is</em> the externalized household manager</li>
+  <li><strong>M6 — Learning costs</strong>: handoff scaffolding (checklists, "ask via me" framing)</li>
+  <li><strong>M9 — Altruism + commitment</strong>: structured commitment with explicit duration</li>
+</ul>
+
+<h2>Cost envelope</h2>
+<ul>
+  <li>200 couples &times; 6 months: ~$2,400 total infra (~$12 / couple over 6 months, ~$2 / couple / month)</li>
+  <li>Heavy-user worst case: ~$50 / couple / 6 months</li>
+  <li>Recruitment cost (paid social) likely dominates infra at n &ge; 100</li>
+</ul>
+
+<h2>Status (May 2026)</h2>
+<ul>
+  <li>Phase 0 + Phase 1 of the build complete — multi-tenant FastAPI service, scope-checked tool layer, real DB, end-to-end multi-turn simulation working.</li>
+  <li>Inbound voice messages (Whisper PT-BR) implemented.</li>
+  <li>Currently in private dev mode against the WhatsApp Cloud API; one verified phone number, no enrollment.</li>
+  <li>Stage gates documented; coauthor sign-off needed before any external (stranger) enrollment or research-mode flip.</li>
+</ul>
+
+<hr>
+<p class="muted">
+  <a href="privacy-v0.html" style="color:#1d4ed8">Privacy policy</a> &middot;
+  <a href="terms-v0.html" style="color:#1d4ed8">Terms of service</a>
+</p>
+<p class="muted">Last updated: 2026-05-03.</p>
+
+</body>
+</html>

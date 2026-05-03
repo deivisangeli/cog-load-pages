@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cog-Load App — Mock Screens (EN)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --wa-bg: #efeae2;
+      --wa-out: #d9fdd3;
+      --wa-in:  #ffffff;
+      --wa-header-marina: #be185d;
+      --wa-header-tiago:  #0369a1;
+      --wa-system: #fff3c4;
+      --pivot-bg: #1e293b;
+    }
+    body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background:#f6f5f3;}
+    .phone { width: 360px; height: 740px; border-radius: 36px; background:#000; padding: 10px; box-shadow: 0 18px 40px rgba(0,0,0,0.18); flex-shrink: 0;}
+    .phone-inner { width:100%; height:100%; border-radius: 28px; overflow:hidden; display:flex; flex-direction:column; background: var(--wa-bg);}
+    .wa-bg { background-color: var(--wa-bg); background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><circle cx='10' cy='10' r='1.2' fill='%23d8d2c5'/><circle cx='40' cy='30' r='1' fill='%23d8d2c5'/><circle cx='60' cy='60' r='1.2' fill='%23d8d2c5'/></svg>");}
+    .wa-header { color:white; display:flex; align-items:center; padding: 10px 14px; gap:10px; flex-shrink:0;}
+    .wa-header.marina { background: var(--wa-header-marina);}
+    .wa-header.tiago  { background: var(--wa-header-tiago);}
+    .wa-msgs { flex:1; overflow-y:auto; padding: 12px 10px 8px; display:flex; flex-direction:column; gap:6px;}
+    .bubble { max-width: 82%; padding: 7px 10px 6px; border-radius: 8px; font-size: 14px; line-height:1.35; box-shadow: 0 1px 0.5px rgba(0,0,0,0.13); white-space:pre-wrap;}
+    .bubble .ts { display:block; font-size:10px; color:#667781; margin-top:2px; text-align:right;}
+    .bubble.in  { background: var(--wa-in); align-self:flex-start; border-top-left-radius:0;}
+    .bubble.out { background: var(--wa-out); align-self:flex-end; border-top-right-radius:0;}
+    .bubble.sys { background: var(--wa-system); align-self:center; font-size:12px; color:#5b5b3b; text-align:center; box-shadow:none;}
+    .bubble.pivot { background: #1e293b; color:#f1f5f9; align-self:flex-start; border-top-left-radius:0; border-left: 3px solid #f59e0b; max-width: 88%;}
+    .bubble.pivot .pivot-tag { display:inline-block; font-size:10px; letter-spacing:1.5px; color:#f59e0b; font-weight:600; text-transform:uppercase; margin-bottom:3px;}
+    .bubble.pivot .ts { color:#94a3b8;}
+    .wa-input { background:#f0f2f5; padding: 8px 10px; display:flex; align-items:center; gap:8px; flex-shrink:0;}
+    .wa-input .field { flex:1; background:white; border-radius: 22px; padding: 8px 14px; color:#a4a4a4; font-size:14px;}
+    .avatar { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:600; font-size:14px;}
+    .avatar.marina {background:#ec4899;}
+    .avatar.tiago  {background:#0ea5e9;}
+    .scene-title { font-size:13px; color:#475569; font-weight:600;}
+    .scene-note { font-size:12px; color:#64748b; max-width: 360px;}
+    .pill {display:inline-block; padding:2px 8px; font-size:10px; border-radius:999px; background:#e2e8f0; color:#334155; margin-right:4px;}
+    .pill.priv {background:#fde68a; color:#92400e;}
+    .pill.shared {background:#bbf7d0; color:#166534;}
+    .pill.mech {background:#dbeafe; color:#1e40af;}
+    .pill.poc-m {background:#fce7f3; color:#9d174d;}
+    .pill.poc-t {background:#dbeafe; color:#075985;}
+    .pill.pivot {background:#1e293b; color:#fbbf24;}
+    .wa-card { background:#f3f4f6; border-radius:6px; padding:6px 8px; margin-top:6px; font-size:13px; color:#374151;}
+    .wa-card.in-pivot { background:#334155; color:#e2e8f0;}
+    .wa-button-row { display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;}
+    .wa-button { background:white; border:1px solid #d1d5db; color:#1f6e9b; font-size:12px; padding:5px 10px; border-radius:6px;}
+    .wa-button.in-pivot { background:#0f172a; border:1px solid #475569; color:#f59e0b;}
+    h1 { font-size: 22px; font-weight:700; color:#0f172a;}
+    h2 { font-size: 16px; font-weight:700; color:#0f172a; margin-top:8px;}
+    .row { display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;}
+    .nav { font-size:13px;} .nav a {color:#1d4ed8;}
+  </style>
+</head>
+<body class="p-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-6">
+      <h1>Cog-Load App — mock screens · EN</h1>
+      <p class="nav mt-1">Portuguese version: <a href="mocks-pt.html">mocks-pt.html</a> &middot; <a href="./">Cog Load home</a></p>
+      <p class="scene-note mt-3 max-w-3xl">
+        <b>3-agent architecture.</b>
+        <span class="pill poc-m">Marina</span> is Carolina's POC (woman-coded, pink chrome).
+        <span class="pill poc-t">Tiago</span> is José's POC (man-coded, blue chrome).
+        <span class="pill pivot">Pivot</span> is the chief-of-staff: genderless, sees both sides, surfaces only at formal moments (proposals, agreements, escalations).
+        Neither POC ever reads the other partner's chat.
+        <br><br>
+        <span class="pill priv">private</span> = visible only to that partner ·
+        <span class="pill shared">shared</span> = both partners see it ·
+        <span class="pill mech">M#</span> = treatment mechanism activated.
+        <br>
+        <i>Note: setting is Brazilian middle-class; mockups in English are for non-PT readers. Names stay as in the production scenario.</i>
+      </p>
+    </div>
+
+    <h2>1. Light onboarding + first useful task</h2>
+    <div class="row mt-2">
+
+      <div>
+        <div class="scene-title mb-2">A · Carolina meets Marina (her POC)</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header marina">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar marina">M</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Marina</div>
+              <div style="font-size:11px; opacity:.85">online · your chief-of-staff</div>
+            </div>
+            <div style="margin-left:auto; font-size:18px">⋮</div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Today</div>
+            <div class="bubble in">Hi Carolina, I'm Marina 👋
+I'm your personal assistant for the household's mental load. I write things down, remind you, organize, and lift what's been weighing on you.
+<div class="wa-card">
+<b>How this works for the two of you:</b><br>
+• I only talk with you. José has someone else, Tiago, who only talks with him.<br>
+• There is also <b>Pivot</b>, a genderless coordinator who works with Tiago and me behind the scenes. Pivot only steps into your chat when you and José are about to formalize something together.<br>
+• You can delete everything at any time.<br>
+• <a href="#" style="color:#1d4ed8">Privacy policy (LGPD)</a>
+</div>
+<div class="wa-button-row">
+  <span class="wa-button">Accept and start</span>
+  <span class="wa-button">I have questions</span>
+</div>
+<span class="ts">10:14</span></div>
+            <div class="bubble out">Accept and start<span class="ts">10:15 ✓✓</span></div>
+            <div class="bubble in">Done. To get value out of me right away: <b>tell me one thing</b> you always end up remembering for the whole household — could be groceries, school, doctor, anything.<span class="ts">10:15</span></div>
+            <div class="bubble out">book João's pediatrician for this month, I haven't gotten to it<span class="ts">10:16</span></div>
+            <div class="bubble in">Got it. When do you want to call to book?
+<div class="wa-button-row">
+  <span class="wa-button">Today 12:00</span>
+  <span class="wa-button">Tomorrow 9:00</span>
+  <span class="wa-button">Other time</span>
+</div>
+<span class="ts">10:16</span></div>
+            <div class="bubble out">tomorrow 9<span class="ts">10:16 ✓✓</span></div>
+            <div class="bubble in">Done. I'll remind you tomorrow at 9. 🙂<span class="ts">10:16</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Message</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">private</span> Marina is named clearly: "I only talk with you". Pivot is named but won't appear until a formal moment.</p>
+      </div>
+
+      <div>
+        <div class="scene-title mb-2">B · Day 2: capture, hold, anticipate</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header marina">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar marina">M</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Marina</div>
+              <div style="font-size:11px; opacity:.85">online</div>
+            </div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Wed · 07:42</div>
+            <div class="bubble in">Good morning ☀️ Reminder: Maria has English class at 16:30 today. Who takes her?<span class="ts">07:42</span></div>
+            <div class="bubble out">José will, he knows<span class="ts">07:46 ✓✓</span></div>
+            <div class="bubble in">Noted. I asked Tiago to confirm with him at 13:00 to avoid surprises, ok?<span class="ts">07:46</span></div>
+            <div class="bubble out">yes<span class="ts">07:46 ✓✓</span></div>
+            <div class="bubble sys">12:51</div>
+            <div class="bubble out">forgot the bread again at the supermarket lol<span class="ts">12:51 ✓✓</span></div>
+            <div class="bubble in">Logged it. That's the 4th time in 3 weeks — want me to remind you whenever you flag "go to supermarket"?
+<div class="wa-button-row">
+  <span class="wa-button">Yes, always</span>
+  <span class="wa-button">Next 2 times</span>
+  <span class="wa-button">No</span>
+</div>
+<span class="ts">12:51</span></div>
+            <div class="bubble out">yes always<span class="ts">12:52 ✓✓</span></div>
+            <div class="bubble sys">19:10</div>
+            <div class="bubble in">Good evening. Day summary:
+<div class="wa-card">
+✅ João's pediatrician booked (May 24, 14:00)<br>
+✅ Maria at English — confirmed (Tiago says José made it)<br>
+🆕 Bread on next supermarket trip<br>
+⏳ Pending: renew health insurance (by May 5)
+</div><span class="ts">19:10</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Message</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">private</span> "Tiago says José made it" — Marina did not see José's chat. She received a structured event via Pivot: <code>kid_pickup_confirmed</code>.</p>
+      </div>
+
+      <div>
+        <div class="scene-title mb-2">C · Parallel thread: Tiago + José</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header tiago">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar tiago">T</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Tiago</div>
+              <div style="font-size:11px; opacity:.85">online · your chief-of-staff</div>
+            </div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Wed · 13:01</div>
+            <div class="bubble in">Hey José — quick check: you're picking up Maria from English at 16:30, right? 🙂<span class="ts">13:01</span></div>
+            <div class="bubble out">confirmed<span class="ts">13:02 ✓✓</span></div>
+            <div class="bubble in">Cool. I'll ping you at 15:45.<span class="ts">13:02</span></div>
+            <div class="bubble sys">Thu · 08:20</div>
+            <div class="bubble out">Tiago, set up a meeting with Maria's teacher, she said it's needed<span class="ts">08:20 ✓✓</span></div>
+            <div class="bubble in">On it. Do you know the teacher's name or shift (morning/afternoon)?<span class="ts">08:20</span></div>
+            <div class="bubble out">Profa Renata, afternoon<span class="ts">08:21 ✓✓</span></div>
+            <div class="bubble in">Logged. I'll remind you Monday 9:00 to call/write.
+Quick question so I don't bug you about things that aren't yours: <b>who normally handles the kids' vaccines and check-ups?</b>
+<div class="wa-button-row">
+  <span class="wa-button">Me</span>
+  <span class="wa-button">Carolina</span>
+  <span class="wa-button">Both</span>
+</div>
+<span class="ts">08:21</span></div>
+            <div class="bubble out">Carolina<span class="ts">08:22 ✓✓</span></div>
+            <div class="bubble in">Got it. No alarms — just so I calibrate what to send.<span class="ts">08:22</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Message</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">private</span> Tiago organically fills José's RESP. Coverage grows without running a 24-item battery.</p>
+      </div>
+    </div>
+
+
+    <h2 class="mt-10">2. Reflection (M1, M9) — invitation + private chart</h2>
+    <div class="row mt-2">
+
+      <div>
+        <div class="scene-title mb-2">D · Marina invites Carolina to reflect (week 3)</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header marina">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar marina">M</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Marina</div>
+              <div style="font-size:11px; opacity:.85">online</div>
+            </div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Sun · 18:30</div>
+            <div class="bubble in">Carol, we hit 3 weeks. Can I show you a short summary of how the mental work was distributed?
+It's private, just for you.
+<div class="wa-button-row">
+  <span class="wa-button">Sure</span>
+  <span class="wa-button">Another time</span>
+</div>
+<span class="ts">18:30</span></div>
+            <div class="bubble out">sure<span class="ts">18:34 ✓✓</span></div>
+            <div class="bubble in">
+            <svg viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg" style="width:100%; border-radius:6px; background:white">
+              <text x="10" y="20" font-size="12" font-family="sans-serif" fill="#0f172a" font-weight="600">Mental tasks — last 3 weeks</text>
+              <text x="10" y="36" font-size="10" font-family="sans-serif" fill="#475569">by domain · count logged</text>
+              <g font-family="sans-serif" font-size="10" fill="#334155">
+                <text x="10" y="62">Children's health</text>
+                <rect x="120" y="52" width="120" height="12" fill="#ec4899"/>
+                <text x="244" y="62" fill="#ec4899">14 / 0</text>
+
+                <text x="10" y="84">School</text>
+                <rect x="120" y="74" width="80"  height="12" fill="#ec4899"/>
+                <rect x="200" y="74" width="22"  height="12" fill="#0ea5e9"/>
+                <text x="226" y="84" fill="#475569">9 / 2</text>
+
+                <text x="10" y="106">Groceries / supplies</text>
+                <rect x="120" y="96" width="56"  height="12" fill="#ec4899"/>
+                <rect x="176" y="96" width="14"  height="12" fill="#0ea5e9"/>
+                <text x="194" y="106" fill="#475569">7 / 2</text>
+
+                <text x="10" y="128">Schedule / logistics</text>
+                <rect x="120" y="118" width="50"  height="12" fill="#ec4899"/>
+                <rect x="170" y="118" width="34"  height="12" fill="#0ea5e9"/>
+                <text x="208" y="128" fill="#475569">6 / 4</text>
+
+                <text x="10" y="150">Home maintenance</text>
+                <rect x="120" y="140" width="20"  height="12" fill="#ec4899"/>
+                <rect x="140" y="140" width="44"  height="12" fill="#0ea5e9"/>
+                <text x="188" y="150" fill="#475569">3 / 6</text>
+
+                <text x="10" y="172">Finances / bills</text>
+                <rect x="120" y="162" width="14"  height="12" fill="#ec4899"/>
+                <rect x="134" y="162" width="60"  height="12" fill="#0ea5e9"/>
+                <text x="198" y="172" fill="#475569">2 / 8</text>
+              </g>
+              <rect x="10" y="194" width="10" height="10" fill="#ec4899"/><text x="24" y="203" font-family="sans-serif" font-size="10" fill="#334155">you</text>
+              <rect x="60" y="194" width="10" height="10" fill="#0ea5e9"/><text x="74" y="203" font-family="sans-serif" font-size="10" fill="#334155">José</text>
+            </svg>
+            <span class="ts">18:34</span></div>
+            <div class="bubble in">Some context: among similar couples (PNAD-C, both working 40h+, 2 kids), <b>children's health</b> usually splits 60/40, while you're at 100/0. <span class="pill mech">M2</span><span class="ts">18:34</span></div>
+            <div class="bubble in">Not a diagnosis — just what came in through the reminders you sent me. How does it feel?
+<div class="wa-button-row">
+  <span class="wa-button">Heavy</span>
+  <span class="wa-button">Fine</span>
+  <span class="wa-button">Want to talk</span>
+</div>
+<span class="ts">18:34</span></div>
+            <div class="bubble out">heavy, especially health<span class="ts">18:35 ✓✓</span></div>
+            <div class="bubble in">Heard you. Can I ask Pivot to draft a concrete proposal for José? You decide whether to send anything before it leaves your chat.<span class="ts">18:35</span></div>
+            <div class="bubble out">go ahead<span class="ts">18:35 ✓✓</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Message</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">private</span> <span class="pill mech">M1</span><span class="pill mech">M2</span> Marina announces Pivot is about to step in — preparing the tonal shift.</p>
+      </div>
+
+      <div>
+        <div class="scene-title mb-2">E · Pivot surfaces in Carolina's chat</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header marina">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar marina">M</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Marina</div>
+              <div style="font-size:11px; opacity:.85">online · with Pivot</div>
+            </div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Sun · 18:38</div>
+            <div class="bubble in">Pivot has two options for you. Passing the floor 👇<span class="ts">18:38</span></div>
+            <div class="bubble pivot">
+              <span class="pivot-tag">⬢ Pivot · private proposal</span>
+              Carolina, I speak neutrally with both of you. Two possible paths:
+              <div class="wa-card in-pivot">
+                <b>Option 1 — Children's health goes to José for 4 weeks</b><br>
+                Includes booking, medications, vaccines. You don't intervene — if he has questions, they come through me and Tiago. <span class="pill mech">M5+M6</span>
+              </div>
+              <div class="wa-card in-pivot">
+                <b>Option 2 — You adjust the standard together</b><br>
+                Marina books, José takes the kids. You decide, he executes. <span class="pill mech">M4</span>
+              </div>
+              <div class="wa-button-row">
+                <span class="wa-button in-pivot">Option 1</span>
+                <span class="wa-button in-pivot">Option 2</span>
+                <span class="wa-button in-pivot">Mix</span>
+                <span class="wa-button in-pivot">Neither</span>
+              </div>
+              <span class="ts">18:38</span>
+            </div>
+            <div class="bubble out">option 1, but only if he really takes it on<span class="ts">18:40 ✓✓</span></div>
+            <div class="bubble pivot">
+              <span class="pivot-tag">⬢ Pivot · proposal to send</span>
+              Fair. I'll propose to José <b>exactly this</b>:
+              <div class="wa-card in-pivot" style="border-left:3px solid #f59e0b">
+                "Your partner is willing to hand over the kids' health for 4 weeks (booking, medications, vaccines) — provided you genuinely take it on, no toggling back. Will you?"
+              </div>
+              Review before sending?
+              <div class="wa-button-row">
+                <span class="wa-button in-pivot">Send</span>
+                <span class="wa-button in-pivot">Edit</span>
+              </div>
+              <span class="ts">18:40</span>
+            </div>
+            <div class="bubble out">send<span class="ts">18:41 ✓✓</span></div>
+            <div class="bubble in">Sent. I'll let you know when he replies. 👇
+<div class="wa-card">
+📤 Proposal sent to José at 18:41 (via Tiago)<br>
+Status: awaiting reply
+</div>
+<span class="ts">18:41</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Message</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">private</span> <span class="pill pivot">Pivot</span> arrives with a clearly different tone (dark, genderless). Marina returns when daily life resumes.</p>
+      </div>
+
+      <div>
+        <div class="scene-title mb-2">F · Proposal reaches José via Tiago + Pivot</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header tiago">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar tiago">T</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Tiago</div>
+              <div style="font-size:11px; opacity:.85">online · with Pivot</div>
+            </div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Sun · 18:42</div>
+            <div class="bubble in">José — Carolina has a concrete proposal for the two of you. Pivot will deliver it formally; I'm here if you want to talk through it after. 👇<span class="ts">18:42</span></div>
+            <div class="bubble pivot">
+              <span class="pivot-tag">⬢ Pivot · proposal from Carolina</span>
+              <div class="wa-card in-pivot" style="border-left:3px solid #f59e0b">
+                "Your partner is willing to hand over the kids' health for 4 weeks (booking, medications, vaccines) — provided you genuinely take it on, no toggling back. Will you?"
+              </div>
+              Light context, no weight: in the last 3 weeks I logged 14 health-related tasks done by her, 0 by you. Not a callout — just what came through our flow. <span class="pill mech">M1</span>
+              <div class="wa-button-row">
+                <span class="wa-button in-pivot">In</span>
+                <span class="wa-button in-pivot">Want to negotiate</span>
+                <span class="wa-button in-pivot">Not now</span>
+              </div>
+              <span class="ts">18:42</span>
+            </div>
+            <div class="bubble out">damn, didn't realize it was 14<span class="ts">19:04 ✓✓</span></div>
+            <div class="bubble in">Happens — most of it is mental, barely shows. I'll help you take it on: I'll send next appointments, remind about meds, and Carol won't intervene for 4 weeks.<span class="ts">19:04</span></div>
+            <div class="bubble out">in. help me out for real<span class="ts">19:05 ✓✓</span></div>
+            <div class="bubble pivot">
+              <span class="pivot-tag">⬢ Pivot · agreement formalized</span>
+              <div class="wa-card in-pivot">
+                <b>Agreement: children's health · Apr 28 → May 26 (4 weeks)</b><br>
+                Owner: José.<br>
+                Support: Tiago reminds, Marina doesn't intervene.<br>
+                Check-in: every Friday.<br>
+                Cancellable anytime by either of you.
+              </div>
+              <span class="ts">19:05</span>
+            </div>
+            <div class="bubble in">Week 1 plan:
+<div class="wa-card">
+• May 6 — pick up Maria's controlled prescription<br>
+• May 18 — João's HPV vaccine<br>
+• Daily reminder: João's Loratadine before school
+</div>
+Technical question? Ask me first — I'll ask Marina if I don't know.<span class="ts">19:05</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Message</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">private</span> <span class="pill mech">M1+M5+M6+M9</span> Pivot notarizes; Tiago resumes daily flow. Carolina is referenced as "your partner" in the payload — never as a quoted source.</p>
+      </div>
+    </div>
+
+
+    <h2 class="mt-10">3. Web app — opened rarely</h2>
+    <div class="row mt-2">
+
+      <div style="flex:1; min-width:560px">
+        <div class="scene-title mb-2">G · Family dashboard (shared)</div>
+        <div style="border:1px solid #e2e8f0; border-radius:14px; background:white; padding:18px; box-shadow: 0 6px 24px rgba(15,23,42,0.06); width:560px">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <div style="font-size:11px; color:#64748b; text-transform:uppercase; letter-spacing:1px">Souza-Lima Family</div>
+              <div style="font-size:20px; font-weight:700; color:#0f172a">Week summary</div>
+              <div style="font-size:12px; color:#64748b">Apr 22 – 28, 2026</div>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <span class="pill poc-m">Marina ↔ Carolina</span>
+              <span class="pill poc-t">Tiago ↔ José</span>
+              <span class="pill pivot">Pivot</span>
+            </div>
+          </div>
+          <hr class="my-3" style="border-color:#e2e8f0">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px">
+            <div style="background:#f8fafc; border-radius:10px; padding:12px">
+              <div style="font-size:11px; color:#64748b">Tasks logged</div>
+              <div style="font-size:24px; font-weight:700; color:#0f172a">41</div>
+              <div style="font-size:11px; color:#16a34a">38 done · 3 pending</div>
+            </div>
+            <div style="background:#f8fafc; border-radius:10px; padding:12px">
+              <div style="font-size:11px; color:#64748b">Active agreements (Pivot)</div>
+              <div style="font-size:24px; font-weight:700; color:#0f172a">1</div>
+              <div style="font-size:11px; color:#a16207">Kids' health · José · 4 wk</div>
+            </div>
+            <div style="background:#f8fafc; border-radius:10px; padding:12px">
+              <div style="font-size:11px; color:#64748b">Mental load · you</div>
+              <div style="font-size:24px; font-weight:700; color:#0f172a">3.4 / 5</div>
+              <div style="font-size:11px; color:#475569">↓ 0.3 vs. last week</div>
+            </div>
+            <div style="background:#f8fafc; border-radius:10px; padding:12px">
+              <div style="font-size:11px; color:#64748b">Mental load · José</div>
+              <div style="font-size:24px; font-weight:700; color:#0f172a">2.1 / 5</div>
+              <div style="font-size:11px; color:#475569">↑ 0.4 vs. last week</div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:13px; font-weight:600; color:#0f172a; margin-bottom:6px">Active agreement (signed by Pivot)</div>
+            <div style="border:1px solid #e2e8f0; border-radius:10px; padding:12px">
+              <div style="font-size:13px; color:#0f172a"><b>Children's health</b> — José owns for 4 weeks</div>
+              <div style="font-size:11px; color:#64748b; margin-top:2px">Started Apr 28 · next check-in May 5</div>
+              <div style="height:6px; background:#e2e8f0; border-radius:3px; margin-top:8px; overflow:hidden">
+                <div style="width:25%; height:100%; background:#1e293b"></div>
+              </div>
+              <div style="font-size:11px; color:#64748b; margin-top:4px">Week 1 of 4</div>
+            </div>
+          </div>
+        </div>
+        <p class="scene-note mt-2"><span class="pill shared">shared</span> Individual metrics (mental load) only show to the owner. Pivot agreements are public to both.</p>
+      </div>
+
+      <div style="flex:1; min-width:380px">
+        <div class="scene-title mb-2">H · Privacy & data (LGPD)</div>
+        <div style="border:1px solid #e2e8f0; border-radius:14px; background:white; padding:18px; box-shadow: 0 6px 24px rgba(15,23,42,0.06); width:400px">
+          <div style="font-size:11px; color:#64748b; text-transform:uppercase; letter-spacing:1px">Your account · Carolina</div>
+          <div style="font-size:18px; font-weight:700; color:#0f172a; margin-bottom:10px">Privacy & data</div>
+          <div style="font-size:12px; color:#475569; line-height:1.5">
+            This account is governed by Brazil's <b>LGPD</b>. You are the data controller.
+          </div>
+          <div style="margin-top:14px; display:flex; flex-direction:column; gap:10px">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:1px solid #e2e8f0; border-radius:10px">
+              <div>
+                <div style="font-size:13px; color:#0f172a; font-weight:600">Conversations with Marina</div>
+                <div style="font-size:11px; color:#64748b">Stored in São Paulo. Only you see them.</div>
+              </div>
+              <button style="font-size:12px; color:#dc2626; background:white; border:1px solid #fecaca; padding:5px 10px; border-radius:6px">Erase</button>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:1px solid #e2e8f0; border-radius:10px">
+              <div>
+                <div style="font-size:13px; color:#0f172a; font-weight:600">Aggregated summaries to Pivot</div>
+                <div style="font-size:11px; color:#64748b">Metrics only, no raw text.</div>
+              </div>
+              <div style="width:36px; height:20px; background:#1e293b; border-radius:999px; position:relative;">
+                <div style="width:16px; height:16px; background:white; border-radius:50%; position:absolute; top:2px; right:2px"></div>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:1px solid #e2e8f0; border-radius:10px">
+              <div>
+                <div style="font-size:13px; color:#0f172a; font-weight:600">Donate anonymized data to the research team</div>
+                <div style="font-size:11px; color:#64748b">Pseudonymized · revocable.</div>
+              </div>
+              <div style="width:36px; height:20px; background:#cbd5e1; border-radius:999px; position:relative;">
+                <div style="width:16px; height:16px; background:white; border-radius:50%; position:absolute; top:2px; left:2px"></div>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:1px solid #e2e8f0; border-radius:10px">
+              <div>
+                <div style="font-size:13px; color:#0f172a; font-weight:600">Export my data</div>
+                <div style="font-size:11px; color:#64748b">JSON + CSV within 24h.</div>
+              </div>
+              <button style="font-size:12px; color:#1d4ed8; background:white; border:1px solid #bfdbfe; padding:5px 10px; border-radius:6px">Download</button>
+            </div>
+          </div>
+          <div style="margin-top:16px; padding-top:12px; border-top:1px solid #e2e8f0; font-size:11px; color:#64748b">
+            DPO: [TBD] · ANPD: <a href="https://gov.br/anpd" style="color:#1d4ed8">gov.br/anpd</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="mt-10">4. Researcher admin</h2>
+    <div class="row mt-2">
+      <div style="flex:1; min-width:880px">
+        <div class="scene-title mb-2">I · Research admin (restricted)</div>
+        <div style="border:1px solid #e2e8f0; border-radius:14px; background:white; padding:18px; box-shadow: 0 6px 24px rgba(15,23,42,0.06); width:880px">
+          <div style="display:flex; align-items:center; justify-content:space-between">
+            <div>
+              <div style="font-size:11px; color:#64748b; text-transform:uppercase; letter-spacing:1px">Research team · Cog-Load App</div>
+              <div style="font-size:20px; font-weight:700; color:#0f172a">Study dashboard</div>
+              <div style="font-size:12px; color:#64748b">n = 12 families · alpha pilot</div>
+            </div>
+            <div style="display:flex; gap:8px">
+              <button style="font-size:12px; border:1px solid #cbd5e1; background:white; padding:6px 10px; border-radius:8px">Export (.dta)</button>
+              <button style="font-size:12px; border:1px solid #cbd5e1; background:white; padding:6px 10px; border-radius:8px">Pivot logs</button>
+              <button style="font-size:12px; border:1px solid #fecaca; color:#b91c1c; background:white; padding:6px 10px; border-radius:8px">Escalations (1)</button>
+            </div>
+          </div>
+          <hr class="my-3" style="border-color:#e2e8f0">
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px">
+            <div style="background:#f8fafc; border-radius:10px; padding:10px"><div style="font-size:11px; color:#64748b">Active families</div><div style="font-size:22px; font-weight:700">12</div></div>
+            <div style="background:#f8fafc; border-radius:10px; padding:10px"><div style="font-size:11px; color:#64748b">Agreements signed</div><div style="font-size:22px; font-weight:700">7</div></div>
+            <div style="background:#f8fafc; border-radius:10px; padding:10px"><div style="font-size:11px; color:#64748b">Held to wk 4</div><div style="font-size:22px; font-weight:700">5 / 7</div></div>
+            <div style="background:#f8fafc; border-radius:10px; padding:10px"><div style="font-size:11px; color:#64748b">Δ mental load</div><div style="font-size:22px; font-weight:700">−0.4</div></div>
+          </div>
+          <div style="margin-top:14px">
+            <table style="width:100%; font-size:12px; border-collapse:collapse">
+              <thead style="color:#64748b; text-align:left">
+                <tr style="border-bottom:1px solid #e2e8f0">
+                  <th style="padding:6px 4px">ID</th>
+                  <th style="padding:6px 4px">State</th>
+                  <th style="padding:6px 4px">Tasks</th>
+                  <th style="padding:6px 4px">RESP cov.</th>
+                  <th style="padding:6px 4px">Agrmts</th>
+                  <th style="padding:6px 4px">Mechanisms</th>
+                  <th style="padding:6px 4px">Δ satisf.</th>
+                  <th style="padding:6px 4px">Last msg</th>
+                </tr>
+              </thead>
+              <tbody style="color:#0f172a">
+                <tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 4px">F-001</td><td>Mediation</td><td>41</td><td>22/24</td><td>1</td><td><span class="pill mech">M1</span><span class="pill mech">M6</span></td><td>+12</td><td>2h</td></tr>
+                <tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 4px">F-002</td><td>Reflection</td><td>27</td><td>18/24</td><td>0</td><td><span class="pill mech">M4</span></td><td>+3</td><td>5h</td></tr>
+                <tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 4px">F-003</td><td>Service</td><td>18</td><td>12/24</td><td>0</td><td>—</td><td>n/a</td><td>1d</td></tr>
+                <tr style="border-bottom:1px solid #f1f5f9; background:#fef2f2"><td style="padding:6px 4px">F-004</td><td><b style="color:#b91c1c">⚠ Escalated</b></td><td>9</td><td>6/24</td><td>0</td><td>—</td><td>n/a</td><td>3h</td></tr>
+                <tr><td style="padding:6px 4px">F-005</td><td>Mediation</td><td>52</td><td>24/24</td><td>2</td><td><span class="pill mech">M9</span></td><td>+18</td><td>30min</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="scene-note mt-2">Researchers see structural data and mechanism tags. Raw transcripts require separate IRB-approved consent.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

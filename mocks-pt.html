@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cog-Load App — Mock Screens (PT)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --wa-bg: #efeae2;
+      --wa-out: #d9fdd3;
+      --wa-in:  #ffffff;
+      --wa-header-marina: #be185d;   /* POC for Carolina (woman-coded) */
+      --wa-header-tiago:  #0369a1;   /* POC for José (man-coded) */
+      --wa-system: #fff3c4;
+      --pivot-bg: #1e293b;           /* Chief: dark slate, deliberately neutral */
+    }
+    body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background:#f6f5f3;}
+    .phone {
+      width: 360px; height: 740px; border-radius: 36px; background:#000;
+      padding: 10px; box-shadow: 0 18px 40px rgba(0,0,0,0.18); flex-shrink: 0;
+    }
+    .phone-inner {
+      width:100%; height:100%; border-radius: 28px; overflow:hidden; display:flex; flex-direction:column;
+      background: var(--wa-bg);
+    }
+    .wa-bg {
+      background-color: var(--wa-bg);
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><circle cx='10' cy='10' r='1.2' fill='%23d8d2c5'/><circle cx='40' cy='30' r='1' fill='%23d8d2c5'/><circle cx='60' cy='60' r='1.2' fill='%23d8d2c5'/></svg>");
+    }
+    .wa-header { color:white; display:flex; align-items:center; padding: 10px 14px; gap:10px; flex-shrink:0;}
+    .wa-header.marina { background: var(--wa-header-marina);}
+    .wa-header.tiago  { background: var(--wa-header-tiago);}
+    .wa-msgs { flex:1; overflow-y:auto; padding: 12px 10px 8px; display:flex; flex-direction:column; gap:6px;}
+    .bubble { max-width: 82%; padding: 7px 10px 6px; border-radius: 8px; font-size: 14px; line-height:1.35; box-shadow: 0 1px 0.5px rgba(0,0,0,0.13); white-space:pre-wrap;}
+    .bubble .ts { display:block; font-size:10px; color:#667781; margin-top:2px; text-align:right;}
+    .bubble.in  { background: var(--wa-in); align-self:flex-start; border-top-left-radius:0;}
+    .bubble.out { background: var(--wa-out); align-self:flex-end; border-top-right-radius:0;}
+    .bubble.sys { background: var(--wa-system); align-self:center; font-size:12px; color:#5b5b3b; text-align:center; box-shadow:none;}
+    .bubble.pivot {
+      background: #1e293b; color:#f1f5f9; align-self:flex-start; border-top-left-radius:0;
+      border-left: 3px solid #f59e0b; max-width: 88%;
+    }
+    .bubble.pivot .pivot-tag {
+      display:inline-block; font-size:10px; letter-spacing:1.5px; color:#f59e0b; font-weight:600;
+      text-transform:uppercase; margin-bottom:3px;
+    }
+    .bubble.pivot .ts { color:#94a3b8;}
+    .bubble img { border-radius:6px; margin: -4px -7px 4px;}
+    .wa-input { background:#f0f2f5; padding: 8px 10px; display:flex; align-items:center; gap:8px; flex-shrink:0;}
+    .wa-input .field { flex:1; background:white; border-radius: 22px; padding: 8px 14px; color:#a4a4a4; font-size:14px;}
+    .avatar { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:600; font-size:14px;}
+    .avatar.marina {background:#ec4899;}
+    .avatar.tiago  {background:#0ea5e9;}
+    .scene-title { font-size:13px; color:#475569; font-weight:600;}
+    .scene-note { font-size:12px; color:#64748b; max-width: 360px;}
+    .legend { font-size:11px; color:#64748b;}
+    .pill {display:inline-block; padding:2px 8px; font-size:10px; border-radius:999px; background:#e2e8f0; color:#334155; margin-right:4px;}
+    .pill.priv {background:#fde68a; color:#92400e;}
+    .pill.shared {background:#bbf7d0; color:#166534;}
+    .pill.mech {background:#dbeafe; color:#1e40af;}
+    .pill.poc-m {background:#fce7f3; color:#9d174d;}
+    .pill.poc-t {background:#dbeafe; color:#075985;}
+    .pill.pivot {background:#1e293b; color:#fbbf24;}
+    .wa-card { background:#f3f4f6; border-radius:6px; padding:6px 8px; margin-top:6px; font-size:13px; color:#374151;}
+    .wa-card.in-pivot { background:#334155; color:#e2e8f0;}
+    .wa-button-row { display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;}
+    .wa-button { background:white; border:1px solid #d1d5db; color:#1f6e9b; font-size:12px; padding:5px 10px; border-radius:6px; cursor:pointer;}
+    .wa-button.in-pivot { background:#0f172a; border:1px solid #475569; color:#f59e0b;}
+    .check { color:#53bdeb; font-size:11px;}
+    h1 { font-size: 22px; font-weight:700; color:#0f172a;}
+    h2 { font-size: 16px; font-weight:700; color:#0f172a; margin-top:8px;}
+    .row { display:flex; gap:24px; flex-wrap:wrap; align-items:flex-start;}
+    .nav { font-size:13px;}
+    .nav a {color:#1d4ed8; text-decoration:none;}
+    .nav a:hover {text-decoration:underline;}
+  </style>
+</head>
+<body class="p-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-6">
+      <h1>Cog-Load App — mock screens · PT-BR</h1>
+      <p class="nav mt-1">English version: <a href="mocks-en.html">mocks-en.html</a> &middot; <a href="./">Cog Load home</a></p>
+      <p class="scene-note mt-3 max-w-3xl">
+        <b>Arquitetura de 3 agentes.</b>
+        <span class="pill poc-m">Marina</span> é a POC da Carolina (gênero feminino, casa-cor rosa).
+        <span class="pill poc-t">Tiago</span> é a POC do José (gênero masculino, casa-cor azul).
+        <span class="pill pivot">Pivô</span> é a chefe-de-gabinete: sem gênero, vê os dois lados, só fala em momentos formais (proposta, acordo, escalonamento).
+        Nenhuma POC nunca lê o chat da outra parceira.
+        <br><br>
+        <span class="pill priv">privado</span> = só uma parceira vê ·
+        <span class="pill shared">compartilhado</span> = ambas as parceiras veem ·
+        <span class="pill mech">M#</span> = mecanismo de tratamento ativado.
+      </p>
+    </div>
+
+    <h2>1. Onboarding leve + primeira tarefa útil</h2>
+    <div class="row mt-2">
+
+      <!-- Scene A: Carolina onboarding with Marina -->
+      <div>
+        <div class="scene-title mb-2">A · Carolina conhece a Marina (POC)</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header marina">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar marina">M</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Marina</div>
+              <div style="font-size:11px; opacity:.85">online · sua chefe-de-gabinete</div>
+            </div>
+            <div style="margin-left:auto; font-size:18px">⋮</div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Hoje</div>
+            <div class="bubble in">Oi Carolina, sou a Marina 👋
+Eu sou sua secretária pessoal pra carga mental da casa. Anoto, lembro, organizo, e te alivio do que tá pesando.
+<div class="wa-card">
+<b>Como funciona com vocês:</b><br>
+• Eu falo só com você. O José tem outra pessoa, o Tiago, que fala só com ele.<br>
+• Existe a <b>Pivô</b>, uma coordenadora sem gênero, que conversa com nós duas (Tiago e eu) por trás dos panos. Ela só aparece pra você quando vocês forem combinar algo formal entre vocês.<br>
+• Você pode apagar tudo a qualquer momento.<br>
+• <a href="#" style="color:#1d4ed8">Política de privacidade (LGPD)</a>
+</div>
+<div class="wa-button-row">
+  <span class="wa-button">Aceitar e começar</span>
+  <span class="wa-button">Tenho dúvidas</span>
+</div>
+<span class="ts">10:14</span></div>
+            <div class="bubble out">Aceitar e começar<span class="ts">10:15 ✓✓</span></div>
+            <div class="bubble in">Pronto. Pra eu já te dar valor: <b>me conta uma coisa</b> que você sempre acaba lembrando para a casa toda — pode ser do mercado, da escola, do médico, qualquer coisa.<span class="ts">10:15</span></div>
+            <div class="bubble out">marca o pediatra do João pra esse mês, ainda não consegui<span class="ts">10:16</span></div>
+            <div class="bubble in">Combinado. Quando você quer ligar pra marcar?
+<div class="wa-button-row">
+  <span class="wa-button">Hoje 12h</span>
+  <span class="wa-button">Amanhã 9h</span>
+  <span class="wa-button">Outro horário</span>
+</div>
+<span class="ts">10:16</span></div>
+            <div class="bubble out">amanhã 9h<span class="ts">10:16 ✓✓</span></div>
+            <div class="bubble in">Feito. Te lembro amanhã às 9h. 🙂<span class="ts">10:16</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Mensagem</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">privado</span> Marina é apresentada com clareza: "eu falo só com você". Pivô é nomeada mas só aparecerá em momento formal.</p>
+      </div>
+
+      <!-- Scene B: Carolina day 2 - service mode -->
+      <div>
+        <div class="scene-title mb-2">B · Dia-a-dia: capturar, lembrar, antecipar</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header marina">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar marina">M</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Marina</div>
+              <div style="font-size:11px; opacity:.85">online</div>
+            </div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Quarta · 07:42</div>
+            <div class="bubble in">Bom dia ☀️ Lembrete: hoje a Maria vai pro inglês 16h30. Quem leva?<span class="ts">07:42</span></div>
+            <div class="bubble out">o José, ele já sabe<span class="ts">07:46 ✓✓</span></div>
+            <div class="bubble in">Anotado. Pedi pro Tiago confirmar com ele 13h pra evitar surpresa, ok?<span class="ts">07:46</span></div>
+            <div class="bubble out">isso<span class="ts">07:46 ✓✓</span></div>
+            <div class="bubble sys">12:51</div>
+            <div class="bubble out">esqueci o pão de novo na ida pro mercado kkk<span class="ts">12:51 ✓✓</span></div>
+            <div class="bubble in">Anotei. É a 4ª vez em 3 semanas — quer que eu mande lembrete sempre que você marcar "ir ao mercado"?
+<div class="wa-button-row">
+  <span class="wa-button">Sim, sempre</span>
+  <span class="wa-button">Próximas 2x</span>
+  <span class="wa-button">Não</span>
+</div>
+<span class="ts">12:51</span></div>
+            <div class="bubble out">sim sempre<span class="ts">12:52 ✓✓</span></div>
+            <div class="bubble sys">19:10</div>
+            <div class="bubble in">Boa noite. Resumo do dia:
+<div class="wa-card">
+✅ Pediatra do João marcado (24/05 14h)<br>
+✅ Maria no inglês — confirmado (Tiago avisou que o José foi)<br>
+🆕 Pão na próxima ida ao mercado<br>
+⏳ Pendente: renovar plano de saúde (até 05/05)
+</div><span class="ts">19:10</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Mensagem</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">privado</span> "Tiago avisou que o José foi" — Marina não viu o chat do José. Recebeu um <i>evento estruturado</i> via Pivô: <code>kid_pickup_confirmed</code>.</p>
+      </div>
+
+      <!-- Scene C: José parallel thread with Tiago -->
+      <div>
+        <div class="scene-title mb-2">C · Thread paralela: Tiago + José</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header tiago">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar tiago">T</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Tiago</div>
+              <div style="font-size:11px; opacity:.85">online · seu chefe-de-gabinete</div>
+            </div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Quarta · 13:01</div>
+            <div class="bubble in">E aí José — só pra confirmar: hoje 16h30 você leva a Maria no inglês, certo? 🙂<span class="ts">13:01</span></div>
+            <div class="bubble out">confirmado<span class="ts">13:02 ✓✓</span></div>
+            <div class="bubble in">Show. Te aviso 15h45.<span class="ts">13:02</span></div>
+            <div class="bubble sys">Quinta · 08:20</div>
+            <div class="bubble out">Tiago, marca uma reunião com a professora da Maria, ela falou que precisa<span class="ts">08:20 ✓✓</span></div>
+            <div class="bubble in">Top. Sabe o nome da professora ou o turno (manhã/tarde)?<span class="ts">08:20</span></div>
+            <div class="bubble out">Profa Renata, tarde<span class="ts">08:21 ✓✓</span></div>
+            <div class="bubble in">Anotado. Te lembro segunda 9h pra ligar/escrever.
+Pequena pergunta pra eu não te encher de lembrete que não é seu: <b>quem normalmente cuida das vacinas e consultas das crianças?</b>
+<div class="wa-button-row">
+  <span class="wa-button">Eu</span>
+  <span class="wa-button">Carolina</span>
+  <span class="wa-button">Os dois</span>
+</div>
+<span class="ts">08:21</span></div>
+            <div class="bubble out">Carolina<span class="ts">08:22 ✓✓</span></div>
+            <div class="bubble in">Anotado. Sem alarmes — é só pra eu calibrar o que te mando.<span class="ts">08:22</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Mensagem</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">privado</span> Tiago preenche organicamente o RESP do José. Cobertura cresce sem rodar bateria de 24 itens.</p>
+      </div>
+    </div>
+
+
+    <h2 class="mt-10">2. Reflexão (M1, M9) — convidada, com chart privado</h2>
+    <div class="row mt-2">
+
+      <!-- Scene D: Reflection invitation -->
+      <div>
+        <div class="scene-title mb-2">D · Marina convida Carolina pra refletir (3 semanas)</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header marina">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar marina">M</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Marina</div>
+              <div style="font-size:11px; opacity:.85">online</div>
+            </div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Domingo · 18:30</div>
+            <div class="bubble in">Carol, completamos 3 semanas. Posso te mostrar um resumo curto de como o trabalho mental se distribuiu?
+É privado, só pra você.
+<div class="wa-button-row">
+  <span class="wa-button">Pode sim</span>
+  <span class="wa-button">Outro dia</span>
+</div>
+<span class="ts">18:30</span></div>
+            <div class="bubble out">pode sim<span class="ts">18:34 ✓✓</span></div>
+            <div class="bubble in">
+            <svg viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg" style="width:100%; border-radius:6px; background:white">
+              <text x="10" y="20" font-size="12" font-family="sans-serif" fill="#0f172a" font-weight="600">Tarefas mentais — 3 últimas semanas</text>
+              <text x="10" y="36" font-size="10" font-family="sans-serif" fill="#475569">por domínio · contagem registrada</text>
+              <g font-family="sans-serif" font-size="10" fill="#334155">
+                <text x="10" y="62">Saúde dos filhos</text>
+                <rect x="120" y="52" width="120" height="12" fill="#ec4899"/>
+                <text x="244" y="62" fill="#ec4899">14 / 0</text>
+
+                <text x="10" y="84">Escola</text>
+                <rect x="120" y="74" width="80"  height="12" fill="#ec4899"/>
+                <rect x="200" y="74" width="22"  height="12" fill="#0ea5e9"/>
+                <text x="226" y="84" fill="#475569">9 / 2</text>
+
+                <text x="10" y="106">Mercado / suprimentos</text>
+                <rect x="120" y="96" width="56"  height="12" fill="#ec4899"/>
+                <rect x="176" y="96" width="14"  height="12" fill="#0ea5e9"/>
+                <text x="194" y="106" fill="#475569">7 / 2</text>
+
+                <text x="10" y="128">Agenda / logística</text>
+                <rect x="120" y="118" width="50"  height="12" fill="#ec4899"/>
+                <rect x="170" y="118" width="34"  height="12" fill="#0ea5e9"/>
+                <text x="208" y="128" fill="#475569">6 / 4</text>
+
+                <text x="10" y="150">Manutenção / casa</text>
+                <rect x="120" y="140" width="20"  height="12" fill="#ec4899"/>
+                <rect x="140" y="140" width="44"  height="12" fill="#0ea5e9"/>
+                <text x="188" y="150" fill="#475569">3 / 6</text>
+
+                <text x="10" y="172">Finanças / contas</text>
+                <rect x="120" y="162" width="14"  height="12" fill="#ec4899"/>
+                <rect x="134" y="162" width="60"  height="12" fill="#0ea5e9"/>
+                <text x="198" y="172" fill="#475569">2 / 8</text>
+              </g>
+              <rect x="10" y="194" width="10" height="10" fill="#ec4899"/><text x="24" y="203" font-family="sans-serif" font-size="10" fill="#334155">você</text>
+              <rect x="60" y="194" width="10" height="10" fill="#0ea5e9"/><text x="74" y="203" font-family="sans-serif" font-size="10" fill="#334155">José</text>
+            </svg>
+            <span class="ts">18:34</span></div>
+            <div class="bubble in">Pra contexto: comparado a casais parecidos com vocês (PNAD-C, dois trabalhando 40h+, 2 filhos), <b>saúde dos filhos</b> em geral fica 60/40, vocês estão 100/0. <span class="pill mech">M2</span><span class="ts">18:34</span></div>
+            <div class="bubble in">Não é diagnóstico — é só o que entrou pelos lembretes que você me mandou. Como você se sente?
+<div class="wa-button-row">
+  <span class="wa-button">Pesado</span>
+  <span class="wa-button">Tranquilo</span>
+  <span class="wa-button">Quero conversar</span>
+</div>
+<span class="ts">18:34</span></div>
+            <div class="bubble out">pesado, principalmente saúde<span class="ts">18:35 ✓✓</span></div>
+            <div class="bubble in">Te ouvi. Posso pedir pra Pivô desenhar uma proposta pro José? Você decide se topa antes de qualquer coisa ir pra ele.<span class="ts">18:35</span></div>
+            <div class="bubble out">pode<span class="ts">18:35 ✓✓</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Mensagem</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">privado</span> <span class="pill mech">M1</span><span class="pill mech">M2</span> Marina explicita que a Pivô vai entrar — preparando a transição de tom.</p>
+      </div>
+
+      <!-- Scene E: Pivô surfaces in Carolina's thread -->
+      <div>
+        <div class="scene-title mb-2">E · Pivô aparece no chat da Carolina (momento formal)</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header marina">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar marina">M</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Marina</div>
+              <div style="font-size:11px; opacity:.85">online · com Pivô</div>
+            </div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Domingo · 18:38</div>
+            <div class="bubble in">Pivô tem duas opções pra você. Vou passar a palavra pra ela 👇<span class="ts">18:38</span></div>
+            <div class="bubble pivot">
+              <span class="pivot-tag">⬢ Pivô · proposta privada</span>
+              Carolina, falo neutra com vocês dois. Aqui são dois caminhos possíveis:
+              <div class="wa-card in-pivot">
+                <b>Opção 1 — Saúde dos filhos vai pro José por 4 semanas</b><br>
+                Inclui marcar consultas, remédios, vacinas. Você não intervém — se ele tiver dúvida, vem por mim e o Tiago. <span class="pill mech">M5+M6</span>
+              </div>
+              <div class="wa-card in-pivot">
+                <b>Opção 2 — Vocês ajustam o padrão</b><br>
+                Marina marca as consultas, José leva. Você decide, ele executa. <span class="pill mech">M4</span>
+              </div>
+              <div class="wa-button-row">
+                <span class="wa-button in-pivot">Opção 1</span>
+                <span class="wa-button in-pivot">Opção 2</span>
+                <span class="wa-button in-pivot">Mistura</span>
+                <span class="wa-button in-pivot">Nenhuma</span>
+              </div>
+              <span class="ts">18:38</span>
+            </div>
+            <div class="bubble out">opção 1, mas só se ele realmente assumir<span class="ts">18:40 ✓✓</span></div>
+            <div class="bubble pivot">
+              <span class="pivot-tag">⬢ Pivô · proposta a enviar</span>
+              Justo. Vou propor pro José <b>exatamente assim</b>:
+              <div class="wa-card in-pivot" style="border-left:3px solid #f59e0b">
+                "Sua parceira topa te passar a saúde dos filhos por 4 semanas (consultas, remédios, vacinas) — desde que você assuma de verdade, sem revezar de volta. Topa?"
+              </div>
+              Você revisa antes?
+              <div class="wa-button-row">
+                <span class="wa-button in-pivot">Mandar</span>
+                <span class="wa-button in-pivot">Editar</span>
+              </div>
+              <span class="ts">18:40</span>
+            </div>
+            <div class="bubble out">manda<span class="ts">18:41 ✓✓</span></div>
+            <div class="bubble in">Mandei. Te aviso quando ele responder. 👇
+<div class="wa-card">
+📤 Proposta enviada ao José às 18:41 (via Tiago)<br>
+Status: aguardando resposta
+</div>
+<span class="ts">18:41</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Mensagem</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">privado</span> <span class="pill pivot">Pivô</span> aparece com tom claramente diferente (escuro, sem gênero). Marina retoma quando volta o cotidiano.</p>
+      </div>
+
+      <!-- Scene F: Pivô surfaces in José's thread -->
+      <div>
+        <div class="scene-title mb-2">F · Proposta chega ao José via Tiago + Pivô</div>
+        <div class="phone"><div class="phone-inner">
+          <div class="wa-header tiago">
+            <span style="font-size:18px">‹</span>
+            <div class="avatar tiago">T</div>
+            <div>
+              <div style="font-weight:600; font-size:14px">Tiago</div>
+              <div style="font-size:11px; opacity:.85">online · com Pivô</div>
+            </div>
+          </div>
+          <div class="wa-msgs wa-bg">
+            <div class="bubble sys">Domingo · 18:42</div>
+            <div class="bubble in">José — a Carolina propôs algo concreto pra vocês. A Pivô vai te passar formal, e eu fico aqui se você quiser conversar depois. 👇<span class="ts">18:42</span></div>
+            <div class="bubble pivot">
+              <span class="pivot-tag">⬢ Pivô · proposta da Carolina</span>
+              <div class="wa-card in-pivot" style="border-left:3px solid #f59e0b">
+                "Sua parceira topa te passar a saúde dos filhos por 4 semanas (consultas, remédios, vacinas) — desde que você assuma de verdade, sem revezar de volta. Topa?"
+              </div>
+              Contexto, sem peso: nas últimas 3 semanas registrei 14 tarefas de saúde feitas por ela, 0 por você. Não é cobrança — é o que entrou pelo nosso fluxo. <span class="pill mech">M1</span>
+              <div class="wa-button-row">
+                <span class="wa-button in-pivot">Topo</span>
+                <span class="wa-button in-pivot">Quero negociar</span>
+                <span class="wa-button in-pivot">Não posso agora</span>
+              </div>
+              <span class="ts">18:42</span>
+            </div>
+            <div class="bubble out">caraca, não tinha noção que era 14<span class="ts">19:04 ✓✓</span></div>
+            <div class="bubble in">Acontece — a maior parte é mental, pouco aparece. Eu te ajudo a assumir: te mando os próximos compromissos, lembro do remédio, e a Carol não interfere por 4 semanas.<span class="ts">19:04</span></div>
+            <div class="bubble out">topo. me ajuda mesmo<span class="ts">19:05 ✓✓</span></div>
+            <div class="bubble pivot">
+              <span class="pivot-tag">⬢ Pivô · acordo formalizado</span>
+              <div class="wa-card in-pivot">
+                <b>Acordo: saúde dos filhos · 28/04 → 26/05 (4 semanas)</b><br>
+                Responsável: José.<br>
+                Apoio: Tiago lembra, Marina não interfere.<br>
+                Check-in: toda 6ª-feira.<br>
+                Cancelável a qualquer momento por qualquer um.
+              </div>
+              <span class="ts">19:05</span>
+            </div>
+            <div class="bubble in">Plano da semana 1:
+<div class="wa-card">
+• 06/05 — buscar receita controlada Maria<br>
+• 18/05 — vacina HPV João<br>
+• Lembrete de cabeceira: tomar Loratadina (João, antes do colégio)
+</div>
+Dúvida técnica? Pergunta pra mim primeiro — eu pergunto pra Marina se eu não souber.<span class="ts">19:05</span></div>
+          </div>
+          <div class="wa-input"><div class="field">Mensagem</div><span>🎤</span></div>
+        </div></div>
+        <p class="scene-note mt-2"><span class="pill priv">privado</span> <span class="pill mech">M1+M5+M6+M9</span> Pivô notariza; Tiago retoma cotidiano. Carolina não é citada como fonte direta — apenas como "parceira" no payload.</p>
+      </div>
+    </div>
+
+
+    <h2 class="mt-10">3. Web app — aberto raramente</h2>
+    <div class="row mt-2">
+
+      <div style="flex:1; min-width:560px">
+        <div class="scene-title mb-2">G · Painel da família (compartilhado)</div>
+        <div style="border:1px solid #e2e8f0; border-radius:14px; background:white; padding:18px; box-shadow: 0 6px 24px rgba(15,23,42,0.06); width:560px">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <div style="font-size:11px; color:#64748b; text-transform:uppercase; letter-spacing:1px">Família Souza-Lima</div>
+              <div style="font-size:20px; font-weight:700; color:#0f172a">Resumo da semana</div>
+              <div style="font-size:12px; color:#64748b">22 – 28 abr 2026</div>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <span class="pill poc-m">Marina ↔ Carolina</span>
+              <span class="pill poc-t">Tiago ↔ José</span>
+              <span class="pill pivot">Pivô</span>
+            </div>
+          </div>
+          <hr class="my-3" style="border-color:#e2e8f0">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px">
+            <div style="background:#f8fafc; border-radius:10px; padding:12px">
+              <div style="font-size:11px; color:#64748b">Tarefas registradas</div>
+              <div style="font-size:24px; font-weight:700; color:#0f172a">41</div>
+              <div style="font-size:11px; color:#16a34a">38 concluídas · 3 pendentes</div>
+            </div>
+            <div style="background:#f8fafc; border-radius:10px; padding:12px">
+              <div style="font-size:11px; color:#64748b">Acordos ativos (Pivô)</div>
+              <div style="font-size:24px; font-weight:700; color:#0f172a">1</div>
+              <div style="font-size:11px; color:#a16207">Saúde dos filhos · José · 4 sem.</div>
+            </div>
+            <div style="background:#f8fafc; border-radius:10px; padding:12px">
+              <div style="font-size:11px; color:#64748b">Carga mental · você</div>
+              <div style="font-size:24px; font-weight:700; color:#0f172a">3.4 / 5</div>
+              <div style="font-size:11px; color:#475569">↓ 0.3 vs. semana passada</div>
+            </div>
+            <div style="background:#f8fafc; border-radius:10px; padding:12px">
+              <div style="font-size:11px; color:#64748b">Carga mental · José</div>
+              <div style="font-size:24px; font-weight:700; color:#0f172a">2.1 / 5</div>
+              <div style="font-size:11px; color:#475569">↑ 0.4 vs. semana passada</div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:13px; font-weight:600; color:#0f172a; margin-bottom:6px">Acordo ativo (assinado pela Pivô)</div>
+            <div style="border:1px solid #e2e8f0; border-radius:10px; padding:12px">
+              <div style="font-size:13px; color:#0f172a"><b>Saúde dos filhos</b> — José assume por 4 semanas</div>
+              <div style="font-size:11px; color:#64748b; margin-top:2px">Iniciado 28/04 · próximo check-in 5/5</div>
+              <div style="height:6px; background:#e2e8f0; border-radius:3px; margin-top:8px; overflow:hidden">
+                <div style="width:25%; height:100%; background:#1e293b"></div>
+              </div>
+              <div style="font-size:11px; color:#64748b; margin-top:4px">Semana 1 de 4</div>
+            </div>
+          </div>
+        </div>
+        <p class="scene-note mt-2"><span class="pill shared">compartilhado</span> Métricas individuais (carga mental) só aparecem para o próprio. Acordos da Pivô são públicos pros dois.</p>
+      </div>
+
+      <div style="flex:1; min-width:380px">
+        <div class="scene-title mb-2">H · Privacidade & dados (LGPD)</div>
+        <div style="border:1px solid #e2e8f0; border-radius:14px; background:white; padding:18px; box-shadow: 0 6px 24px rgba(15,23,42,0.06); width:400px">
+          <div style="font-size:11px; color:#64748b; text-transform:uppercase; letter-spacing:1px">Sua conta · Carolina</div>
+          <div style="font-size:18px; font-weight:700; color:#0f172a; margin-bottom:10px">Privacidade & dados</div>
+          <div style="font-size:12px; color:#475569; line-height:1.5">
+            Esta conta está sob a <b>LGPD</b>. Você é a controladora dos seus dados.
+          </div>
+          <div style="margin-top:14px; display:flex; flex-direction:column; gap:10px">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:1px solid #e2e8f0; border-radius:10px">
+              <div>
+                <div style="font-size:13px; color:#0f172a; font-weight:600">Conversas com Marina</div>
+                <div style="font-size:11px; color:#64748b">Armazenadas em São Paulo. Só você vê.</div>
+              </div>
+              <button style="font-size:12px; color:#dc2626; background:white; border:1px solid #fecaca; padding:5px 10px; border-radius:6px">Apagar</button>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:1px solid #e2e8f0; border-radius:10px">
+              <div>
+                <div style="font-size:13px; color:#0f172a; font-weight:600">Resumos agregados pra Pivô</div>
+                <div style="font-size:11px; color:#64748b">Métricas, sem texto bruto.</div>
+              </div>
+              <div style="width:36px; height:20px; background:#1e293b; border-radius:999px; position:relative;">
+                <div style="width:16px; height:16px; background:white; border-radius:50%; position:absolute; top:2px; right:2px"></div>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:1px solid #e2e8f0; border-radius:10px">
+              <div>
+                <div style="font-size:13px; color:#0f172a; font-weight:600">Doar dados anônimos pra pesquisa</div>
+                <div style="font-size:11px; color:#64748b">Pseudonimizado · revogável.</div>
+              </div>
+              <div style="width:36px; height:20px; background:#cbd5e1; border-radius:999px; position:relative;">
+                <div style="width:16px; height:16px; background:white; border-radius:50%; position:absolute; top:2px; left:2px"></div>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:1px solid #e2e8f0; border-radius:10px">
+              <div>
+                <div style="font-size:13px; color:#0f172a; font-weight:600">Exportar meus dados</div>
+                <div style="font-size:11px; color:#64748b">JSON + CSV em até 24h.</div>
+              </div>
+              <button style="font-size:12px; color:#1d4ed8; background:white; border:1px solid #bfdbfe; padding:5px 10px; border-radius:6px">Baixar</button>
+            </div>
+          </div>
+          <div style="margin-top:16px; padding-top:12px; border-top:1px solid #e2e8f0; font-size:11px; color:#64748b">
+            DPO: [a definir] · ANPD: <a href="https://gov.br/anpd" style="color:#1d4ed8">gov.br/anpd</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="mt-10">4. Painel da pesquisadora</h2>
+    <div class="row mt-2">
+      <div style="flex:1; min-width:880px">
+        <div class="scene-title mb-2">I · Admin pesquisa (acesso restrito)</div>
+        <div style="border:1px solid #e2e8f0; border-radius:14px; background:white; padding:18px; box-shadow: 0 6px 24px rgba(15,23,42,0.06); width:880px">
+          <div style="display:flex; align-items:center; justify-content:space-between">
+            <div>
+              <div style="font-size:11px; color:#64748b; text-transform:uppercase; letter-spacing:1px">Equipe de pesquisa · Cog-Load App</div>
+              <div style="font-size:20px; font-weight:700; color:#0f172a">Painel do estudo</div>
+              <div style="font-size:12px; color:#64748b">n = 12 famílias · pilot alpha</div>
+            </div>
+            <div style="display:flex; gap:8px">
+              <button style="font-size:12px; border:1px solid #cbd5e1; background:white; padding:6px 10px; border-radius:8px">Exportar (.dta)</button>
+              <button style="font-size:12px; border:1px solid #cbd5e1; background:white; padding:6px 10px; border-radius:8px">Logs Pivô</button>
+              <button style="font-size:12px; border:1px solid #fecaca; color:#b91c1c; background:white; padding:6px 10px; border-radius:8px">Escalonamentos (1)</button>
+            </div>
+          </div>
+          <hr class="my-3" style="border-color:#e2e8f0">
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px">
+            <div style="background:#f8fafc; border-radius:10px; padding:10px"><div style="font-size:11px; color:#64748b">Famílias ativas</div><div style="font-size:22px; font-weight:700">12</div></div>
+            <div style="background:#f8fafc; border-radius:10px; padding:10px"><div style="font-size:11px; color:#64748b">Acordos firmados</div><div style="font-size:22px; font-weight:700">7</div></div>
+            <div style="background:#f8fafc; border-radius:10px; padding:10px"><div style="font-size:11px; color:#64748b">Cumpridos sem.4</div><div style="font-size:22px; font-weight:700">5 / 7</div></div>
+            <div style="background:#f8fafc; border-radius:10px; padding:10px"><div style="font-size:11px; color:#64748b">Δ carga mental</div><div style="font-size:22px; font-weight:700">−0.4</div></div>
+          </div>
+          <div style="margin-top:14px">
+            <table style="width:100%; font-size:12px; border-collapse:collapse">
+              <thead style="color:#64748b; text-align:left">
+                <tr style="border-bottom:1px solid #e2e8f0">
+                  <th style="padding:6px 4px">ID</th>
+                  <th style="padding:6px 4px">Estado</th>
+                  <th style="padding:6px 4px">Tarefas</th>
+                  <th style="padding:6px 4px">RESP cob.</th>
+                  <th style="padding:6px 4px">Acordos</th>
+                  <th style="padding:6px 4px">Mecanismos</th>
+                  <th style="padding:6px 4px">Δ satisf.</th>
+                  <th style="padding:6px 4px">Última msg</th>
+                </tr>
+              </thead>
+              <tbody style="color:#0f172a">
+                <tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 4px">F-001</td><td>Mediação</td><td>41</td><td>22/24</td><td>1</td><td><span class="pill mech">M1</span><span class="pill mech">M6</span></td><td>+12</td><td>2h</td></tr>
+                <tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 4px">F-002</td><td>Reflexão</td><td>27</td><td>18/24</td><td>0</td><td><span class="pill mech">M4</span></td><td>+3</td><td>5h</td></tr>
+                <tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px 4px">F-003</td><td>Serviço</td><td>18</td><td>12/24</td><td>0</td><td>—</td><td>n/d</td><td>1d</td></tr>
+                <tr style="border-bottom:1px solid #f1f5f9; background:#fef2f2"><td style="padding:6px 4px">F-004</td><td><b style="color:#b91c1c">⚠ Escalonado</b></td><td>9</td><td>6/24</td><td>0</td><td>—</td><td>n/d</td><td>3h</td></tr>
+                <tr><td style="padding:6px 4px">F-005</td><td>Mediação</td><td>52</td><td>24/24</td><td>2</td><td><span class="pill mech">M9</span></td><td>+18</td><td>30min</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="scene-note mt-2">Pesquisadora vê dados estruturais e mecanismos. Transcrição bruta exige consentimento separado IRB.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
